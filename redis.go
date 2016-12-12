@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"gopkg.in/redis.v3"
+	"gopkg.in/redis.v5"
 
 	"github.com/getlantern/golog"
 	"github.com/getlantern/keyman"
@@ -70,7 +70,7 @@ func NewClient(opts *Opts) (*redis.Client, error) {
 		opts.PoolSize = 3
 	}
 
-	db := int64(0)
+	db := 0
 	if len(u.Path) > 0 {
 		log.Debugf("Trying to determine database number from path: %v", u.Path)
 		_, dbstring := path.Split(u.Path)
@@ -78,7 +78,7 @@ func NewClient(opts *Opts) (*redis.Client, error) {
 		if err2 != nil {
 			log.Errorf("Unable to get database number from path %v: %v", u.Path, err2)
 		} else {
-			db = int64(_db)
+			db = _db
 		}
 	}
 	log.Debugf("Using database %d", db)
